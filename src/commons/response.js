@@ -6,13 +6,15 @@ const buildResponseWithPagination = (data, params) => {
       pageSize: params.pageSize,
       orderBy: params.orderBy,
       sort: params.sort,
-      total: params.count,
+      total: params.total,
     },
   };
 };
 
-const buildResponseNoPagination = (data) => {
+const buildResponse = (data) => {
   return {
     data,
   };
 };
+
+export { buildResponse, buildResponseWithPagination };
