@@ -14,6 +14,7 @@ const userUseCase = {
       );
     }
   },
+
   getUserById: async (id) => {
     try {
       if (!id || isNaN(Number(id))) {

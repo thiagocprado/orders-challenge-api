@@ -29,6 +29,7 @@ const userRepository = {
 
     return { count, data: rows };
   },
+
   getUserById: async (id) => {
     const row = await User.findByPk(id, {
       include: [
@@ -49,6 +50,7 @@ const userRepository = {
 
     return { found: true, data: row };
   },
+
   createUser: async (body) => {
     const row = await User.create(body);
 

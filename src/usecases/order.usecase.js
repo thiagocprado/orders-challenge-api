@@ -23,6 +23,7 @@ const orderUseCase = {
       );
     }
   },
+
   getOrderById: async (id) => {
     try {
       if (!id || isNaN(Number(id))) {
@@ -43,6 +44,7 @@ const orderUseCase = {
       );
     }
   },
+
   uploadOrders: async (file) => {
     try {
       const { isFileValid, fileError } = validateFile(file);

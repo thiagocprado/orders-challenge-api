@@ -1,6 +1,6 @@
+import { Op } from "sequelize";
 import Order from "../models/order.model.js";
 import OrderProduct from "../models/order.product.model.js";
-import User from "../models/user.model.js";
 
 const orderRepository = {
   getAllOrders: async (params) => {
@@ -8,8 +8,32 @@ const orderRepository = {
     const limit = Number(params.pageSize);
     const orderBy = params.orderBy;
     const sort = params.sort.toUpperCase();
+    const filters = [];
+
+    if (params.initialDate) {
+      filters.push({
+        date: {
+          [Op.gte]: new Date(params.initialDate),
+        },
+      });
+    }
+
+    if (params.finalDate) {
+      filters.push({
+        date: {
+          [Op.lte]: new Date(params.finalDate),
+        },
+      });
+    }
+
+    if (params.id) {
+      filters.push({ id: params.id });
+    }
 
     const { count, rows } = await Order.findAndCountAll({
+      where: {
+        [Op.and]: filters,
+      },
       limit,
       offset,
       order: [[orderBy, sort]],
@@ -23,6 +47,7 @@ const orderRepository = {
 
     return { count, data: rows };
   },
+
   getOrderById: async (id) => {
     const row = await Order.findByPk(id, {
       include: [
@@ -37,6 +62,7 @@ const orderRepository = {
 
     return { found: true, data: row };
   },
+
   createOrder: async (body) => {
     const row = await Order.create(body);
 

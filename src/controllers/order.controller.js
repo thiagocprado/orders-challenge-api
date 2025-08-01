@@ -15,14 +15,20 @@ const orderController = {
       const {
         page = 1,
         pageSize = 10,
-        orderBy = "createdAt",
+        orderBy = "date",
         sort = "ASC",
+        initialDate = null,
+        finalDate = null,
+        id = null,
       } = req.query;
       const params = {
         page,
         pageSize,
         orderBy,
         sort,
+        initialDate,
+        finalDate,
+        id,
       };
 
       const { count, data } = await orderUseCase.getAllOrders(params);
