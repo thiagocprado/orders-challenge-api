@@ -34,20 +34,23 @@ const handleRowContent = (row) => {
 
 const validateFile = (file) => {
   if (!file) {
-    return { isFileValid: false, fileError: 'Arquivo não encontrado!' };
+    return {
+      isFileValid: false,
+      fileError: 'Arquivo inválido! Verifique o arquivo e tente novamente!',
+    };
   }
 
   if (!file.mimetype || !file.mimetype.includes(FILE_MIME_TYPE)) {
     return {
       isFileValid: false,
-      fileError: 'Formato de arquivo inválido! Use TXT.',
+      fileError: 'Formato de arquivo inválido! Utilize apenas o formato .txt!',
     };
   }
 
-  if (!file.size === 0) {
+  if (file.size === 0) {
     return {
       isFileValid: false,
-      fileError: 'O conteúdo do arquivo é inválido!',
+      fileError: 'O conteúdo do arquivo é inválido! Verifique o arquivo e tente novamente!',
     };
   }
 

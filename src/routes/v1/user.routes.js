@@ -8,7 +8,7 @@ const userRoutes = Router();
 const usecase = userUseCase(userRepository);
 const controller = userController(usecase);
 
-userRoutes.get('/', controller.getAllUsers);
-userRoutes.get('/:id', controller.getUserById);
+userRoutes.get('/orders', controller.getAllUsers);
+userRoutes.get('/:id/orders', controller.getUserById);
 
 export default userRoutes;
