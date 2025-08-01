@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import Order from '../models/order.model.js';
 import OrderProduct from '../models/order.product.model.js';
+import { InternalServerError } from '../commons/error.js';
 
 const orderRepository = {
   getAllOrders: async (params) => {
@@ -30,43 +31,55 @@ const orderRepository = {
       filters.push({ id: params.id });
     }
 
-    const { count, rows } = await Order.findAndCountAll({
-      where: {
-        [Op.and]: filters,
-      },
-      limit,
-      offset,
-      order: [[orderBy, sort]],
-      include: [
-        {
-          model: OrderProduct,
-          as: 'products',
+    try {
+      const { count, rows } = await Order.findAndCountAll({
+        where: {
+          [Op.and]: filters,
         },
-      ],
-    });
+        limit,
+        offset,
+        order: [[orderBy, sort]],
+        include: [
+          {
+            model: OrderProduct,
+            as: 'products',
+          },
+        ],
+      });
 
-    return { count, data: rows };
+      return { count, data: rows };
+    } catch (error) {
+      throw new InternalServerError('Erro ao buscar pedidos na base de dados', error);
+    }
   },
 
   getOrderById: async (id) => {
-    const row = await Order.findByPk(id, {
-      include: [
-        {
-          model: OrderProduct,
-          as: 'products',
-        },
-      ],
-    });
+    try {
+      const row = await Order.findByPk(id, {
+        include: [
+          {
+            model: OrderProduct,
+            as: 'products',
+          },
+        ],
+      });
 
-    if (!row) return { found: false, data: null };
+      if (!row) return { found: false, data: null };
 
-    return { found: true, data: row };
+      return { found: true, data: row };
+    } catch (error) {
+      throw new InternalServerError('Erro ao buscar pedido na base de dados', error);
+    }
   },
 
   createOrder: async (body) => {
-    const row = await Order.create(body);
+    try {
+      const row = await Order.create(body);
 
-    return { data: row };
+      return { data: row };
+    } catch (error) {
+      throw new InternalServerError('Erro ao criar pedido na base de dados', error);
+    }
   },
 };
 
