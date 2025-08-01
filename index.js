@@ -12,6 +12,9 @@ import logger from "./src/utils/logger.js";
       logger.info("see api health in /health");
     });
   } catch (error) {
-    logger.error(`error starting server: ${error}`);
+    logger.error("error starting server", {
+      message: error.message,
+      stack: error.stack,
+    });
   }
 })();

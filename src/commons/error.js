@@ -1,15 +1,25 @@
 class BadRequest extends Error {
-  constructor(message) {
+  constructor(message, cause = null) {
     super(message);
     this.name = "BadRequest";
+    this.cause = cause;
   }
 }
 
 class NotFound extends Error {
-  constructor(message) {
+  constructor(message, cause = null) {
     super(message);
     this.name = "NotFound";
+    this.cause = cause;
   }
 }
 
-export { BadRequest, NotFound };
+class InternalServerError extends Error {
+  constructor(message, cause = null) {
+    super(message);
+    this.name = "InternalServerError";
+    this.cause = cause;
+  }
+}
+
+export { BadRequest, NotFound, InternalServerError };
