@@ -4,6 +4,10 @@ import {
   buildResponse,
   buildResponseWithPagination,
 } from "../commons/response.js";
+import {
+  serializableUser,
+  serializableUsers,
+} from "../serializable/user.serializable.js";
 
 const userController = {
   getAllUsers: async (req, res, next) => {
@@ -23,7 +27,7 @@ const userController = {
 
       const { count, data } = await userUseCase.getAllUsers(params);
 
-      const resp = buildResponseWithPagination(data, {
+      const resp = buildResponseWithPagination(serializableUsers(data), {
         ...params,
         total: count,
       });
@@ -38,7 +42,7 @@ const userController = {
     try {
       const { id } = req.params;
       const data = await userUseCase.getUserById(id);
-      const resp = buildResponse(data);
+      const resp = buildResponse(serializableUser(data));
 
       res.status(status.OK).json(resp);
     } catch (error) {

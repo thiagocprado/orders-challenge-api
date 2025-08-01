@@ -4,6 +4,10 @@ import {
   buildResponse,
   buildResponseWithPagination,
 } from "../commons/response.js";
+import {
+  serializableOrder,
+  serializableOrders,
+} from "../serializable/order.serializable.js";
 
 const orderController = {
   getAllOrders: async (req, res, next) => {
@@ -23,7 +27,7 @@ const orderController = {
 
       const { count, data } = await orderUseCase.getAllOrders(params);
 
-      const resp = buildResponseWithPagination(data, {
+      const resp = buildResponseWithPagination(serializableOrders(data), {
         ...params,
         total: count,
       });
@@ -38,7 +42,7 @@ const orderController = {
     try {
       const { id } = req.params;
       const data = await orderUseCase.getOrderById(id);
-      const resp = buildResponse(data);
+      const resp = buildResponse(serializableOrder(data));
 
       res.status(status.OK).json(resp);
     } catch (error) {
