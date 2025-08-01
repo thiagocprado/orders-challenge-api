@@ -1,9 +1,8 @@
 import { status } from 'http-status';
-import orderUseCase from '../usecases/order.usecase.js';
 import { buildResponse, buildResponseWithPagination } from '../commons/response.js';
 import { serializableOrder, serializableOrders } from '../serializable/order.serializable.js';
 
-const orderController = {
+const orderController = (orderUseCase) => ({
   getAllOrders: async (req, res, next) => {
     try {
       const {
@@ -61,6 +60,6 @@ const orderController = {
       next(error);
     }
   },
-};
+});
 
 export default orderController;

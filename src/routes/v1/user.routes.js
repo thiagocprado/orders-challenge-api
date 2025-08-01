@@ -1,9 +1,14 @@
 import { Router } from 'express';
 import userController from '../../controllers/user.controller.js';
+import userRepository from '../../repositories/user.repository.js';
+import userUseCase from '../../usecases/user.usecase.js';
 
 const userRoutes = Router();
 
-userRoutes.get('/', userController.getAllUsers);
-userRoutes.get('/:id', userController.getUserById);
+const usecase = userUseCase(userRepository);
+const controller = userController(usecase);
+
+userRoutes.get('/', controller.getAllUsers);
+userRoutes.get('/:id', controller.getUserById);
 
 export default userRoutes;

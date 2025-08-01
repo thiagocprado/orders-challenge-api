@@ -1,7 +1,6 @@
-import userRepository from '../repositories/user.repository.js';
 import { BadRequest, InternalServerError, NotFound } from '../commons/error.js';
 
-const userUseCase = {
+const userUseCase = (userRepository) => ({
   getAllUsers: async (params) => {
     try {
       const { count, data } = await userRepository.getAllUsers(params);
@@ -29,6 +28,6 @@ const userUseCase = {
       throw new InternalServerError('Houve uma falha interna ao buscar o usuário!', error);
     }
   },
-};
+});
 
 export default userUseCase;

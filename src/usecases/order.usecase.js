@@ -2,11 +2,8 @@ import { BadRequest, InternalServerError, NotFound } from '../commons/error.js';
 import { createInterface } from 'readline';
 import { handleRowContent, validateFile, validateFileRow } from '../entities/order.entity.js';
 import { createReadStream, unlinkSync } from 'fs';
-import orderRepository from '../repositories/order.repository.js';
-import userRepository from '../repositories/user.repository.js';
-import orderProductRepository from '../repositories/order.product.repository.js';
 
-const orderUseCase = {
+const orderUseCase = (orderRepository, orderProductRepository, userRepository) => ({
   getAllOrders: async (params) => {
     try {
       const { count, data } = await orderRepository.getAllOrders(params);
@@ -36,11 +33,12 @@ const orderUseCase = {
   },
 
   uploadOrders: async (file) => {
+    const { isFileValid, fileError } = validateFile(file);
+    if (!isFileValid) {
+      throw new BadRequest(fileError);
+    }
+
     try {
-      const { isFileValid, fileError } = validateFile(file);
-      if (!isFileValid) {
-        throw new BadRequest(fileError);
-      }
       let totalProcessed = 0;
 
       const fileStream = createReadStream(file.path);
@@ -99,6 +97,6 @@ const orderUseCase = {
       );
     }
   },
-};
+});
 
 export default orderUseCase;
