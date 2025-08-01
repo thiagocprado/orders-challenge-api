@@ -7,14 +7,14 @@ const Order = sequelize.define(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: false,
     },
-    clientId: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    orderDate: {
-      type: DataTypes.DATE,
+    date: {
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
   },
