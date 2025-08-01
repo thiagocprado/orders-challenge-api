@@ -1,14 +1,10 @@
-import { BadRequest, InternalServerError, NotFound } from "../commons/error.js";
-import { createInterface } from "readline";
-import {
-  handleRowContent,
-  validateFile,
-  validateFileRow,
-} from "../entities/order.entity.js";
-import { createReadStream, unlinkSync } from "fs";
-import orderRepository from "../repositories/order.repository.js";
-import userRepository from "../repositories/user.repository.js";
-import orderProductRepository from "../repositories/order.product.repository.js";
+import { BadRequest, InternalServerError, NotFound } from '../commons/error.js';
+import { createInterface } from 'readline';
+import { handleRowContent, validateFile, validateFileRow } from '../entities/order.entity.js';
+import { createReadStream, unlinkSync } from 'fs';
+import orderRepository from '../repositories/order.repository.js';
+import userRepository from '../repositories/user.repository.js';
+import orderProductRepository from '../repositories/order.product.repository.js';
 
 const orderUseCase = {
   getAllOrders: async (params) => {
@@ -17,31 +13,25 @@ const orderUseCase = {
 
       return { count, data };
     } catch (error) {
-      throw new InternalServerError(
-        "Houve uma falha interna ao buscar pedidos!",
-        error
-      );
+      throw new InternalServerError('Houve uma falha interna ao buscar pedidos!', error);
     }
   },
 
   getOrderById: async (id) => {
     try {
       if (!id || isNaN(Number(id))) {
-        throw new BadRequest("É preciso informar um ID válido!");
+        throw new BadRequest('É preciso informar um ID válido!');
       }
 
       const { found, data } = await orderRepository.getOrderById(id);
 
       if (!found) {
-        throw new NotFound("Pedido não encontrado!");
+        throw new NotFound('Pedido não encontrado!');
       }
 
       return data;
     } catch (error) {
-      throw new InternalServerError(
-        "Houve uma falha interna ao buscar o pedido!",
-        error
-      );
+      throw new InternalServerError('Houve uma falha interna ao buscar o pedido!', error);
     }
   },
 
@@ -81,11 +71,10 @@ const orderUseCase = {
           });
         }
 
-        const product =
-          await orderProductRepository.getOrderProductByOrderIdAndProductId(
-            orderData.orderId,
-            orderData.productId
-          );
+        const product = await orderProductRepository.getOrderProductByOrderIdAndProductId(
+          orderData.orderId,
+          orderData.productId
+        );
         if (!product.found) {
           await orderProductRepository.createOrderProduct({
             orderId: orderData.orderId,
@@ -105,7 +94,7 @@ const orderUseCase = {
       }
 
       throw new InternalServerError(
-        "Houve uma falha interna ao processar o arquivo de pedidos!",
+        'Houve uma falha interna ao processar o arquivo de pedidos!',
         error
       );
     }

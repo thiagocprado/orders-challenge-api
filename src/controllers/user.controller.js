@@ -1,23 +1,12 @@
-import { status } from "http-status";
-import userUseCase from "../usecases/user.usecase.js";
-import {
-  buildResponse,
-  buildResponseWithPagination,
-} from "../commons/response.js";
-import {
-  serializableUser,
-  serializableUsers,
-} from "../serializable/user.serializable.js";
+import { status } from 'http-status';
+import userUseCase from '../usecases/user.usecase.js';
+import { buildResponse, buildResponseWithPagination } from '../commons/response.js';
+import { serializableUser, serializableUsers } from '../serializable/user.serializable.js';
 
 const userController = {
   getAllUsers: async (req, res, next) => {
     try {
-      const {
-        page = 1,
-        pageSize = 10,
-        orderBy = "createdAt",
-        sort = "ASC",
-      } = req.query;
+      const { page = 1, pageSize = 10, orderBy = 'createdAt', sort = 'ASC' } = req.query;
       const params = {
         page,
         pageSize,

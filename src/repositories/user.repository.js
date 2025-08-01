@@ -1,6 +1,6 @@
-import User from "../models/user.model.js";
-import Order from "../models/order.model.js";
-import OrderProduct from "../models/order.product.model.js";
+import User from '../models/user.model.js';
+import Order from '../models/order.model.js';
+import OrderProduct from '../models/order.product.model.js';
 
 const userRepository = {
   getAllUsers: async (params) => {
@@ -16,11 +16,11 @@ const userRepository = {
       include: [
         {
           model: Order,
-          as: "orders",
+          as: 'orders',
           include: [
             {
               model: OrderProduct,
-              as: "products",
+              as: 'products',
             },
           ],
         },
@@ -35,11 +35,11 @@ const userRepository = {
       include: [
         {
           model: Order,
-          as: "orders",
+          as: 'orders',
           include: [
             {
               model: OrderProduct,
-              as: "products",
+              as: 'products',
             },
           ],
         },

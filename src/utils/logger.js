@@ -1,4 +1,4 @@
-import loggerConfig from "../configs/logger.js";
+import loggerConfig from '../configs/logger.js';
 
 const logger = {
   debug: (message) => loggerConfig.debug(message),

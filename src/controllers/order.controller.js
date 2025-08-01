@@ -1,13 +1,7 @@
-import { status } from "http-status";
-import orderUseCase from "../usecases/order.usecase.js";
-import {
-  buildResponse,
-  buildResponseWithPagination,
-} from "../commons/response.js";
-import {
-  serializableOrder,
-  serializableOrders,
-} from "../serializable/order.serializable.js";
+import { status } from 'http-status';
+import orderUseCase from '../usecases/order.usecase.js';
+import { buildResponse, buildResponseWithPagination } from '../commons/response.js';
+import { serializableOrder, serializableOrders } from '../serializable/order.serializable.js';
 
 const orderController = {
   getAllOrders: async (req, res, next) => {
@@ -15,8 +9,8 @@ const orderController = {
       const {
         page = 1,
         pageSize = 10,
-        orderBy = "date",
-        sort = "ASC",
+        orderBy = 'date',
+        sort = 'ASC',
         initialDate = null,
         finalDate = null,
         id = null,
@@ -60,7 +54,7 @@ const orderController = {
     try {
       const { file } = req;
       const data = await orderUseCase.uploadOrders(file);
-      const resp = buildResponse(data, "Pedidos processados com sucesso!");
+      const resp = buildResponse(data, 'Pedidos processados com sucesso!');
 
       res.status(status.CREATED).json(resp);
     } catch (error) {

@@ -1,4 +1,4 @@
-import OrderProduct from "../models/order.product.model.js";
+import OrderProduct from '../models/order.product.model.js';
 
 const orderProductRepository = {
   getOrderProductByOrderIdAndProductId: async (orderId, productId) => {

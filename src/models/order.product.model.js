@@ -1,8 +1,8 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../configs/database.js";
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../configs/database.js';
 
 const OrderProduct = sequelize.define(
-  "OrderProduct",
+  'OrderProduct',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -23,7 +23,7 @@ const OrderProduct = sequelize.define(
     },
   },
   {
-    tableName: "tb_orders_products",
+    tableName: 'tb_orders_products',
     timestamps: true,
   }
 );

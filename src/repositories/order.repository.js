@@ -1,6 +1,6 @@
-import { Op } from "sequelize";
-import Order from "../models/order.model.js";
-import OrderProduct from "../models/order.product.model.js";
+import { Op } from 'sequelize';
+import Order from '../models/order.model.js';
+import OrderProduct from '../models/order.product.model.js';
 
 const orderRepository = {
   getAllOrders: async (params) => {
@@ -40,7 +40,7 @@ const orderRepository = {
       include: [
         {
           model: OrderProduct,
-          as: "products",
+          as: 'products',
         },
       ],
     });
@@ -53,7 +53,7 @@ const orderRepository = {
       include: [
         {
           model: OrderProduct,
-          as: "products",
+          as: 'products',
         },
       ],
     });

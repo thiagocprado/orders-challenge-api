@@ -1,8 +1,4 @@
-const buildResponseWithPagination = (
-  data,
-  params,
-  message = "Operação realizada com sucesso!"
-) => {
+const buildResponseWithPagination = (data, params, message = 'Operação realizada com sucesso!') => {
   return {
     message,
     data,
@@ -16,7 +12,7 @@ const buildResponseWithPagination = (
   };
 };
 
-const buildResponse = (data, message = "Operação realizada com sucesso!") => {
+const buildResponse = (data, message = 'Operação realizada com sucesso!') => {
   return {
     message,
     data,

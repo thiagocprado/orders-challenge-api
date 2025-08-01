@@ -1,5 +1,5 @@
-export const FILE_TEMP_PATH = "temp/";
-export const FILE_MIME_TYPE = "text/plain";
+export const FILE_TEMP_PATH = 'temp/';
+export const FILE_MIME_TYPE = 'text/plain';
 export const FILE_FIELD_LENGTHS = {
   userId: 10,
   name: 45,
@@ -8,7 +8,4 @@ export const FILE_FIELD_LENGTHS = {
   productValue: 12,
   orderDate: 8,
 };
-export const FILE_ROW_LENGTH = Object.values(FILE_FIELD_LENGTHS).reduce(
-  (a, b) => a + b,
-  0
-);
+export const FILE_ROW_LENGTH = Object.values(FILE_FIELD_LENGTHS).reduce((a, b) => a + b, 0);

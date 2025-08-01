@@ -1,6 +1,6 @@
-import createApp from "./src/app.js";
-import environment from "./src/configs/environment.js";
-import logger from "./src/utils/logger.js";
+import createApp from './src/app.js';
+import environment from './src/configs/environment.js';
+import logger from './src/utils/logger.js';
 
 (async function startHttpServer() {
   try {
@@ -9,10 +9,10 @@ import logger from "./src/utils/logger.js";
 
     server.listen(port, () => {
       logger.info(`server is running on port ${port}`);
-      logger.info("see api health in /health");
+      logger.info('see api health in /health');
     });
   } catch (error) {
-    logger.error("error starting server", {
+    logger.error('error starting server', {
       message: error.message,
       stack: error.stack,
     });
