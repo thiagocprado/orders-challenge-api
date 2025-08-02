@@ -2,12 +2,12 @@ import { Sequelize } from 'sequelize';
 import environment from './environment.js';
 import logger from '../utils/logger.js';
 
-const { database, user, password, host, port } = environment.db;
-const sequelize = new Sequelize(database, user, password, {
-  host: host,
-  dialect: 'postgres',
-  port: port,
-  logging: false,
+const { dialect, host, logging, name, password, port, user } = environment.db;
+const sequelize = new Sequelize(name, user, password, {
+  dialect,
+  host,
+  logging: logging === 'true' ? true : false,
+  port,
 });
 
 const connectDB = async () => {
