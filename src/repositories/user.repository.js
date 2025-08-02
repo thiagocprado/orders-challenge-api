@@ -3,8 +3,8 @@ import Order from '../models/order.model.js';
 import OrderProduct from '../models/order.product.model.js';
 import { InternalServerError } from '../commons/error.js';
 
-const userRepository = {
-  getAllUsers: async (params) => {
+const userRepository = () => {
+  const getAllUsers = async (params) => {
     const offset = (Number(params.page) - 1) * Number(params.pageSize);
     const limit = Number(params.pageSize);
     const orderBy = params.orderBy;
@@ -33,9 +33,9 @@ const userRepository = {
     } catch (error) {
       throw new InternalServerError('Erro ao buscar usuários na base de dados', error);
     }
-  },
+  };
 
-  getUserById: async (id) => {
+  const getUserById = async (id) => {
     try {
       const row = await User.findByPk(id, {
         include: [
@@ -58,17 +58,26 @@ const userRepository = {
     } catch (error) {
       throw new InternalServerError('Erro ao buscar usuário na base de dados', error);
     }
-  },
+  };
 
-  createUser: async (body) => {
+  const findOrCreateUser = async (userData) => {
     try {
-      const row = await User.create(body);
+      const [user, created] = await User.findOrCreate({
+        where: { id: userData.id },
+        defaults: userData,
+      });
 
-      return { data: row };
+      return { data: user, created };
     } catch (error) {
-      throw new InternalServerError('Erro ao criar usuário na base de dados', error);
+      throw new InternalServerError('Erro ao buscar/criar usuário no banco de dados', error);
     }
-  },
+  };
+
+  return {
+    getAllUsers,
+    getUserById,
+    findOrCreateUser,
+  };
 };
 
 export default userRepository;

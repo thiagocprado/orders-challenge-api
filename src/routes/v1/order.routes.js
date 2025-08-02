@@ -8,7 +8,7 @@ import userRepository from '../../repositories/user.repository.js';
 
 const orderRoutes = Router();
 
-const usecase = orderUseCase(orderRepository, orderProductRepository, userRepository);
+const usecase = orderUseCase(orderRepository(), orderProductRepository(), userRepository());
 const controller = orderController(usecase);
 
 orderRoutes.get('/', controller.getAllOrders);

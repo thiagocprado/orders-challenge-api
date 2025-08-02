@@ -5,7 +5,7 @@ import userUseCase from '../../usecases/user.usecase.js';
 
 const userRoutes = Router();
 
-const usecase = userUseCase(userRepository);
+const usecase = userUseCase(userRepository());
 const controller = userController(usecase);
 
 userRoutes.get('/orders', controller.getAllUsers);

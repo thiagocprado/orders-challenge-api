@@ -2,8 +2,8 @@ import { status } from 'http-status';
 import { buildResponse, buildResponseWithPagination } from '../commons/response.js';
 import { serializableOrder, serializableOrders } from '../serializable/order.serializable.js';
 
-const orderController = (orderUseCase) => ({
-  getAllOrders: async (req, res, next) => {
+const orderController = (orderUseCase) => {
+  const getAllOrders = async (req, res, next) => {
     try {
       const {
         page = 1,
@@ -35,9 +35,9 @@ const orderController = (orderUseCase) => ({
     } catch (error) {
       next(error);
     }
-  },
+  };
 
-  getOrderById: async (req, res, next) => {
+  const getOrderById = async (req, res, next) => {
     try {
       const { id } = req.params;
       const data = await orderUseCase.getOrderById(id);
@@ -47,9 +47,9 @@ const orderController = (orderUseCase) => ({
     } catch (error) {
       next(error);
     }
-  },
+  };
 
-  uploadOrders: async (req, res, next) => {
+  const uploadOrders = async (req, res, next) => {
     try {
       const { file } = req;
       const data = await orderUseCase.uploadOrders(file);
@@ -59,7 +59,13 @@ const orderController = (orderUseCase) => ({
     } catch (error) {
       next(error);
     }
-  },
-});
+  };
+
+  return {
+    getAllOrders,
+    getOrderById,
+    uploadOrders,
+  };
+};
 
 export default orderController;

@@ -2,8 +2,8 @@ import { status } from 'http-status';
 import { buildResponse, buildResponseWithPagination } from '../commons/response.js';
 import { serializableUser, serializableUsers } from '../serializable/user.serializable.js';
 
-const userController = (userUseCase) => ({
-  getAllUsers: async (req, res, next) => {
+const userController = (userUseCase) => {
+  const getAllUsers = async (req, res, next) => {
     try {
       const { page = 1, pageSize = 10, orderBy = 'createdAt', sort = 'ASC' } = req.query;
       const params = {
@@ -24,9 +24,9 @@ const userController = (userUseCase) => ({
     } catch (error) {
       next(error);
     }
-  },
+  };
 
-  getUserById: async (req, res, next) => {
+  const getUserById = async (req, res, next) => {
     try {
       const { id } = req.params;
       const data = await userUseCase.getUserById(id);
@@ -36,7 +36,12 @@ const userController = (userUseCase) => ({
     } catch (error) {
       next(error);
     }
-  },
-});
+  };
+
+  return {
+    getAllUsers,
+    getUserById,
+  };
+};
 
 export default userController;

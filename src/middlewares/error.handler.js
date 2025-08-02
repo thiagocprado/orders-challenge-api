@@ -18,14 +18,17 @@ const errorHandlerMiddleware = (error, _req, resp, _next) => {
   }
 
   let stack;
+  let errorMessage;
   if (error.cause?.stack) {
+    errorMessage = error.cause.original.message;
     stack = error.cause.stack;
   } else {
     stack = error.stack;
+    errorMessage = error.message;
   }
 
   logger.error({
-    errorMessage: error.message,
+    errorMessage,
     message,
     code,
     stack,
