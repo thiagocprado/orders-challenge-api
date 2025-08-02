@@ -1,8 +1,9 @@
 import { BadRequest, NotFound } from '../commons/error.js';
 import { createInterface } from 'readline';
 import { handleRowContent, validateFile, validateFileRow } from '../entities/order.entity.js';
-import { createReadStream, unlinkSync } from 'fs';
+import { createReadStream } from 'fs';
 import logger from '../utils/logger.js';
+import { unlink } from 'fs/promises';
 
 const orderUseCase = (orderRepository, orderProductRepository, userRepository) => {
   const validateUploadFile = (file) => {
@@ -28,23 +29,19 @@ const orderUseCase = (orderRepository, orderProductRepository, userRepository) =
   const processOrderLines = async (lines) => {
     const results = await Promise.all(
       lines.map(async (row, index) => {
-        return await processSingleOrderLine(row, index);
+        const isRowValid = validateFileRow(row);
+        if (!isRowValid) {
+          logger.warn(`row ${index + 1} invalid`);
+          return null;
+        }
+
+        const orderData = handleRowContent(row);
+        await saveOrderData(orderData);
+        return true;
       })
     );
 
     return results.filter((result) => result === true).length;
-  };
-
-  const processSingleOrderLine = async (row, index) => {
-    const isRowValid = validateFileRow(row);
-    if (!isRowValid) {
-      logger.warn(`Linha ${index + 1} inválida: ${row}`);
-      return null;
-    }
-
-    const orderData = handleRowContent(row);
-    await saveOrderData(orderData);
-    return true;
   };
 
   const saveOrderData = async (orderData) => {
@@ -89,9 +86,12 @@ const orderUseCase = (orderRepository, orderProductRepository, userRepository) =
       validateUploadFile(file);
       const lines = await readFileLines(file.path);
       const totalProcessed = await processOrderLines(lines);
+
+      logger.info(`${totalProcessed} lines processed successfully`);
+
       return totalProcessed;
     } finally {
-      unlinkSync(file.path);
+      await unlink(file.path);
     }
   };
 
