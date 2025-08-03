@@ -6,6 +6,14 @@ import logger from '../../utils/logger.js';
 import { unlink } from 'fs/promises';
 
 const orderUseCase = (orderRepository, orderProductRepository, userRepository) => {
+  const validateUploadFile = async (file) => {
+    const { isFileValid, fileError } = validateFile(file);
+    if (!isFileValid) {
+      if (file && file?.path) await unlink(file.path);
+      throw new BadRequest(fileError);
+    }
+  };
+
   const readFileLines = async (filePath) => {
     const fileStream = createReadStream(filePath);
     const readline = createInterface({ input: fileStream });
@@ -75,18 +83,14 @@ const orderUseCase = (orderRepository, orderProductRepository, userRepository) =
   };
 
   const uploadOrders = async (file) => {
-    const { isFileValid, fileError } = validateFile(file);
-    if (!isFileValid) {
-      if (file && file?.path) await unlink(file.path);
-      throw new BadRequest(fileError);
-    }
+    await validateUploadFile(file);
 
     const lines = await readFileLines(file.path);
     const totalProcessed = await processOrderLines(lines);
 
     logger.info(`${totalProcessed} lines processed successfully`);
 
-    await unlink(file.path);
+    if (file && file?.path) await unlink(file.path);
 
     return totalProcessed;
   };
