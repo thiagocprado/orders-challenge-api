@@ -3,7 +3,8 @@ test:
 	@npm run test
 
 run:
-	@docker-compose up --build
+	@docker-compose up -d --build
+	@echo app is running...
 
 docker-build:
 	@docker-compose up -d db
