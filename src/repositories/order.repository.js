@@ -49,7 +49,7 @@ const orderRepository = () => {
 
       return { count, data: rows };
     } catch (error) {
-      throw new InternalServerError('Erro ao buscar pedidos na base de dados', error);
+      throw new InternalServerError('Houve um erro inesperado ao buscar os pedidos', error);
     }
   };
 
@@ -68,7 +68,7 @@ const orderRepository = () => {
 
       return { found: true, data: row };
     } catch (error) {
-      throw new InternalServerError('Erro ao buscar pedido na base de dados', error);
+      throw new InternalServerError('Houve um erro inesperado ao buscar o pedido', error);
     }
   };
 
@@ -78,7 +78,7 @@ const orderRepository = () => {
 
       return { data: row };
     } catch (error) {
-      throw new InternalServerError('Erro ao criar pedido na base de dados', error);
+      throw new InternalServerError('Houve um erro inesperado ao criar o pedido', error);
     }
   };
 
@@ -91,7 +91,7 @@ const orderRepository = () => {
 
       return { data: order, created };
     } catch (error) {
-      throw new InternalServerError('Erro ao buscar/criar pedido no banco de dados', error);
+      throw new InternalServerError('Houve um erro inesperado ao buscar/criar o pedido', error);
     }
   };
 

@@ -4,7 +4,7 @@ import logger from '../utils/logger.js';
 
 const errorHandlerMiddleware = (error, _req, resp, _next) => {
   let code = status.INTERNAL_SERVER_ERROR;
-  let message = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
+  let message = 'Ocorreu uma falha inesperada. Tente novamente mais tarde.';
 
   if (error instanceof BadRequest) {
     code = status.BAD_REQUEST;

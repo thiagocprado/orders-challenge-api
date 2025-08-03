@@ -31,7 +31,7 @@ const userRepository = () => {
 
       return { count, data: rows };
     } catch (error) {
-      throw new InternalServerError('Erro ao buscar usuários na base de dados', error);
+      throw new InternalServerError('Houve um erro inesperado ao buscar os usuários', error);
     }
   };
 
@@ -56,7 +56,7 @@ const userRepository = () => {
 
       return { found: true, data: row };
     } catch (error) {
-      throw new InternalServerError('Erro ao buscar usuário na base de dados', error);
+      throw new InternalServerError('Houve um erro inesperado ao buscar o usuário', error);
     }
   };
 
@@ -69,7 +69,7 @@ const userRepository = () => {
 
       return { data: user, created };
     } catch (error) {
-      throw new InternalServerError('Erro ao buscar/criar usuário no banco de dados', error);
+      throw new InternalServerError('Houve um erro inesperado ao buscar/criar o usuário', error);
     }
   };
 

@@ -12,7 +12,10 @@ const orderProductRepository = () => {
 
       return { found: true, data: row };
     } catch (error) {
-      throw new InternalServerError('Erro ao buscar produto do pedido na base de dados', error);
+      throw new InternalServerError(
+        'Houve um erro inesperado ao buscar o produto do pedido',
+        error
+      );
     }
   };
 
@@ -22,7 +25,7 @@ const orderProductRepository = () => {
 
       return { data: row };
     } catch (error) {
-      throw new InternalServerError('Erro ao criar produto do pedido na base de dados', error);
+      throw new InternalServerError('Houve um erro inesperado ao criar o produto do pedido', error);
     }
   };
 
@@ -39,7 +42,7 @@ const orderProductRepository = () => {
       return { data: orderProduct, created };
     } catch (error) {
       throw new InternalServerError(
-        'Erro ao buscar/criar produto do pedido no banco de dados',
+        'Houve um erro inesperado ao buscar/criar o produto do pedido',
         error
       );
     }
