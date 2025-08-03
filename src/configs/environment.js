@@ -3,6 +3,7 @@ dotenv.config();
 
 const environment = {
   app: {
+    env: process.env.NODE_ENV,
     port: Number(process.env.APP_PORT),
   },
   db: {

@@ -1,18 +1,11 @@
-import { BadRequest, NotFound } from '../commons/error.js';
+import { BadRequest, NotFound } from '../../commons/error.js';
 import { createInterface } from 'readline';
-import { handleRowContent, validateFile, validateFileRow } from '../entities/order.entity.js';
+import { handleRowContent, validateFile, validateFileRow } from './order.entity.js';
 import { createReadStream } from 'fs';
-import logger from '../utils/logger.js';
+import logger from '../../utils/logger.js';
 import { unlink } from 'fs/promises';
 
 const orderUseCase = (orderRepository, orderProductRepository, userRepository) => {
-  const validateUploadFile = (file) => {
-    const { isFileValid, fileError } = validateFile(file);
-    if (!isFileValid) {
-      throw new BadRequest(fileError);
-    }
-  };
-
   const readFileLines = async (filePath) => {
     const fileStream = createReadStream(filePath);
     const readline = createInterface({ input: fileStream });
@@ -82,17 +75,20 @@ const orderUseCase = (orderRepository, orderProductRepository, userRepository) =
   };
 
   const uploadOrders = async (file) => {
-    try {
-      validateUploadFile(file);
-      const lines = await readFileLines(file.path);
-      const totalProcessed = await processOrderLines(lines);
-
-      logger.info(`${totalProcessed} lines processed successfully`);
-
-      return totalProcessed;
-    } finally {
-      await unlink(file.path);
+    const { isFileValid, fileError } = validateFile(file);
+    if (!isFileValid) {
+      if (file && file?.path) await unlink(file.path);
+      throw new BadRequest(fileError);
     }
+
+    const lines = await readFileLines(file.path);
+    const totalProcessed = await processOrderLines(lines);
+
+    logger.info(`${totalProcessed} lines processed successfully`);
+
+    await unlink(file.path);
+
+    return totalProcessed;
   };
 
   return {

@@ -1,6 +1,6 @@
 import { status } from 'http-status';
-import { buildResponse, buildResponseWithPagination } from '../commons/response.js';
-import { serializableOrder, serializableOrders } from '../serializable/order.serializable.js';
+import { buildResponse, buildResponseWithPagination } from '../../commons/response.js';
+import { serializableOrder, serializableOrders } from './order.serializable.js';
 
 const orderController = (orderUseCase) => {
   const getAllOrders = async (req, res, next) => {

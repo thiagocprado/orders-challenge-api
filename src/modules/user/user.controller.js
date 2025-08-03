@@ -1,6 +1,6 @@
 import { status } from 'http-status';
-import { buildResponse, buildResponseWithPagination } from '../commons/response.js';
-import { serializableUser, serializableUsers } from '../serializable/user.serializable.js';
+import { buildResponse, buildResponseWithPagination } from '../../commons/response.js';
+import { serializableUser, serializableUsers } from './user.serializable.js';
 
 const userController = (userUseCase) => {
   const getAllUsers = async (req, res, next) => {
