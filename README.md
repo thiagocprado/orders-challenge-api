@@ -26,6 +26,8 @@ Uma API REST para gerenciamento de pedidos, construída com Node.js, Express e P
 - **Docker** e **Docker Compose** (para execução com containers)
 - **PostgreSQL** (se executar sem Docker)
 - **Make** (opcional, para comandos simplificados)
+  - **Linux/macOS**: Disponível nativamente
+  - **Windows**: Instalar via [Chocolatey](https://chocolatey.org/) com `choco install make`
 
 ## 📦 Como Executar
 
