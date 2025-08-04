@@ -62,6 +62,9 @@ make test-coverage
 
 ### Linha de Comando
 ```bash
+# Subir banco de dados (PostgreSQL)
+docker-compose up -d
+
 # Instalar dependências
 npm install
 
