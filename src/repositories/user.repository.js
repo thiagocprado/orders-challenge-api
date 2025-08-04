@@ -1,7 +1,7 @@
-import User from './user.model.js';
-import Order from '../order/order.model.js';
-import OrderProduct from '../orderProduct/order.product.model.js';
-import { InternalServerError } from '../../commons/error.js';
+import User from '../models/user.model.js';
+import Order from '../models/order.model.js';
+import OrderProduct from '../models/order.product.model.js';
+import { InternalServerError } from '../commons/error.js';
 
 const userRepository = () => {
   const getAllUsers = async (params) => {

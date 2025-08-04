@@ -1,8 +1,8 @@
-import { BadRequest, NotFound } from '../../commons/error.js';
+import { BadRequest, NotFound } from '../commons/error.js';
 import { createInterface } from 'readline';
-import { handleRowContent, validateFile, validateFileRow } from './order.entity.js';
+import { handleRowContent, validateFile, validateFileRow } from '../entities/order.entity.js';
 import { createReadStream } from 'fs';
-import logger from '../../utils/logger.js';
+import logger from '../utils/logger.js';
 import { unlink } from 'fs/promises';
 
 const orderUseCase = (orderRepository, orderProductRepository, userRepository) => {

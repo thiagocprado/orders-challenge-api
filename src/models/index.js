@@ -1,6 +1,6 @@
-import User from '../modules/user/user.model.js';
-import Order from '../modules/order/order.model.js';
-import OrderProduct from '../modules/orderProduct/order.product.model.js';
+import User from './user.model.js';
+import Order from './order.model.js';
+import OrderProduct from './order.product.model.js';
 
 User.hasMany(Order, { foreignKey: 'userId', as: 'orders' });
 Order.belongsTo(User, { foreignKey: 'userId', as: 'user' });

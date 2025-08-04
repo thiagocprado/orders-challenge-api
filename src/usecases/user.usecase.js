@@ -1,4 +1,4 @@
-import { BadRequest, NotFound } from '../../commons/error.js';
+import { BadRequest, NotFound } from '../commons/error.js';
 
 const userUseCase = (userRepository) => {
   const getAllUsers = async (params) => {

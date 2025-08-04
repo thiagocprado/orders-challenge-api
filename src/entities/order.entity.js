@@ -1,5 +1,5 @@
-import { FILE_FIELD_LENGTHS, FILE_MIME_TYPE, FILE_ROW_LENGTH } from '../../enums/index.js';
-import { formatDateWithoutHour } from '../../utils/formatter.js';
+import { FILE_FIELD_LENGTHS, FILE_MIME_TYPE, FILE_ROW_LENGTH } from '../enums/index.js';
+import { formatDateWithoutHour } from '../utils/formatter.js';
 
 const handleRowContent = (row) => {
   let currentIndex = 0;

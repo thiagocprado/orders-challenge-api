@@ -1,5 +1,5 @@
-import OrderProduct from './order.product.model.js';
-import { InternalServerError } from '../../commons/error.js';
+import OrderProduct from '../models/order.product.model.js';
+import { InternalServerError } from '../commons/error.js';
 
 const orderProductRepository = () => {
   const getOrderProductByOrderIdAndProductId = async (orderId, productId) => {

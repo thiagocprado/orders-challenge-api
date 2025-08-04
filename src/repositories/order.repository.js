@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
-import Order from './order.model.js';
-import OrderProduct from '../orderProduct/order.product.model.js';
-import { InternalServerError } from '../../commons/error.js';
+import Order from '../models/order.model.js';
+import OrderProduct from '../models/order.product.model.js';
+import { InternalServerError } from '../commons/error.js';
 
 const orderRepository = () => {
   const getAllOrders = async (params) => {
