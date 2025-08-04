@@ -7,8 +7,20 @@ test-coverage:
 	@npm run test:coverage
 
 run:
+	@echo Starting application with Docker...
 	@docker-compose up -d --build
-	@echo app is running...
+	@echo App is running...
 
 docker-build:
+	@echo Starting database only...
 	@docker-compose up -d db
+
+docker-down:
+	@echo Stopping database...
+	@docker-compose down
+
+clean:
+	@echo Stopping all containers and removing volumes...
+	@docker-compose down -v --remove-orphans
+	@docker system prune -f
+	@echo Build cleanup completed!

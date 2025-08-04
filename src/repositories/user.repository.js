@@ -11,7 +11,8 @@ const userRepository = () => {
     const sort = params.sort.toUpperCase();
 
     try {
-      const { count, rows } = await User.findAndCountAll({
+      const count = await User.count();
+      const rows = await User.findAll({
         limit,
         offset,
         order: [[orderBy, sort]],

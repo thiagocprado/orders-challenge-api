@@ -53,6 +53,12 @@ make run
 # Executar apenas banco de dados
 make docker-build
 
+# Parar banco de dados
+make docker-down
+
+# Limpar todo o ambiente Docker (containers, volumes, cache)
+make clean
+
 # Rodar testes
 make test
 
@@ -63,7 +69,10 @@ make test-coverage
 ### Linha de Comando
 ```bash
 # Subir banco de dados (PostgreSQL)
-docker-compose up -d
+docker-compose up -d db
+
+# Parar o banco de dados
+docker-compose stop db
 
 # Instalar dependências
 npm install
