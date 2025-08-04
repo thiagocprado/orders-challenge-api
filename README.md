@@ -1,20 +1,13 @@
 # Orders Challenge API
 
-Uma API REST para gerenciamento de pedidos (orders) construída com Node.js, seguindo princípios de arquitetura limpa e SOLID.
+Uma API REST para gerenciamento de pedidos, construída com Node.js, Express e PostgreSQL.
 
-🔄 **Pipeline CI**: [Visualizar no GitHub Actions](https://github.com/thiagocprado/orders-challange-api/actions/workflows/ci.yml)
-
-## 🚀 Por que Node.js?
-
-Node.js foi escolhido por sua:
-- **Performance**: Event loop não-bloqueante ideal para APIs
-- **Ecosystem**: NPM com vasto conjunto de bibliotecas
-- **JavaScript**: Linguagem única para todo o stack
-- **Escalabilidade**: Excelente para aplicações I/O intensivas
+🔄 **Pipeline CI**: [Visualizar no GitHub Actions](https://github.com/thiagocprado/orders-challenge-api/actions/workflows/ci.yml)
 
 ## 🛠️ Principais Tecnologias
 
 ### Backend
+- **Node.js**: Escolhido por sua performance (event loop não-bloqueante ideal para APIs), vasto ecosystem NPM, JavaScript único para todo o stack e excelente escalabilidade para aplicações I/O intensivas
 - **Express.js**: Framework web minimalista e flexível
 - **PostgreSQL**: Banco relacional robusto e confiável
 - **Sequelize**: ORM com migrations e validações automáticas
@@ -26,7 +19,29 @@ Node.js foi escolhido por sua:
 - **Docker**: Containerização para desenvolvimento consistente
 - **GitHub Actions**: CI/CD automatizado
 
+## 📋 Pré-requisitos
+
+- **Node.js** 22+ 
+- **NPM** ou **Yarn**
+- **Docker** e **Docker Compose** (para execução com containers)
+- **PostgreSQL** (se executar sem Docker)
+- **Make** (opcional, para comandos simplificados)
+
 ## 📦 Como Executar
+
+### ⚙️ Configuração de Ambiente
+1. Copie o arquivo de exemplo: `cp .env.example .env`
+2. Preencha as variáveis no arquivo `.env`:
+```bash
+APP_PORT=3000
+DB_DIALECT=postgres
+DB_HOST=localhost
+DB_LOGGING=false
+DB_NAME=orders_db
+DB_PASSWORD=sua_senha
+DB_PORT=5432
+DB_USER=seu_usuario
+```
 
 ### Com Make (Recomendado)
 ```bash
@@ -56,6 +71,9 @@ npm start
 
 # Rodar testes
 npm test
+
+# Rodar testes com coverage
+npm run test:coverage
 ```
 
 ## 🌐 Endpoints da API
@@ -79,9 +97,15 @@ npm test
     - `id` - Filtro por ID específico (ex: `id=1072`)
 - `GET /v1/orders/:id` - Busca pedido específico
 - `POST /v1/orders` - Upload de arquivo com pedidos (form-data: `orders_data`)
+  - **Formato aceito**: Arquivos de texto (.txt, .csv) 
+  - **Estrutura esperada**: Dados de pedidos separados por linha/delimitador
+  - **📂 Arquivos de teste**: Na pasta `/data` há arquivos `.txt` prontos para teste
 
 ### 📄 Collection do Postman
-Na pasta `/docs` você encontra a collection completa do Postman (`orders-challange-api.collection.json`) com todos os endpoints configurados e exemplos de uso dos parâmetros.
+Na pasta `/docs` você encontra a **collection do Postman** (`orders-challenge-api.collection.json`) com todos os endpoints configurados e exemplos de uso dos parâmetros. 
+
+> **📥 Download Postman**: [https://www.postman.com/downloads/](https://www.postman.com/downloads/)  
+> **💡 Como usar**: Abra o Postman → Import → Selecione o arquivo `orders-challenge-api.collection.json` 
 
 ## 🔄 Pipeline CI/CD
 
@@ -131,5 +155,3 @@ Request → Controller → UseCase → Repository → Database
                     ↓
 Response ← Serializer ← Entity ← Model ← Database
 ```
-
-Esta arquitetura garante **testabilidade**, **manutenibilidade** e **baixo acoplamento** entre as camadas.
