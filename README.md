@@ -97,7 +97,7 @@ npm run test:coverage
     - `id` - Filtro por ID específico (ex: `id=1072`)
 - `GET /v1/orders/:id` - Busca pedido específico
 - `POST /v1/orders` - Upload de arquivo com pedidos (form-data: `orders_data`)
-  - **Formato aceito**: Arquivos de texto (.txt, .csv) 
+  - **Formato aceito**: Arquivos de texto (.txt) 
   - **Estrutura esperada**: Dados de pedidos separados por linha/delimitador
   - **📂 Arquivos de teste**: Na pasta `/data` há arquivos `.txt` prontos para teste
 
