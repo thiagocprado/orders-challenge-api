@@ -1,0 +1,702 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Orders Challenge API",
+    "description": "API para gerenciamento de pedidos.\n\n### Funcionalidades principais:\n- Consulta de usuários e seus pedidos\n- Listagem e filtragem de pedidos\n- Upload em lote de pedidos via arquivo\n- Health check\n",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    },
+    {
+      "url": "http://localhost:3000/api",
+      "description": "API base path"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["Health"],
+        "summary": "Health check endpoint",
+        "description": "Verifica se a API está funcionando corretamente",
+        "responses": {
+          "200": {
+            "description": "API está funcionando",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                },
+                "example": {
+                  "status": "UP"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/orders": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Lista todos os usuários com seus pedidos",
+        "description": "Retorna lista paginada de usuários com seus respectivos pedidos.\nSuporta ordenação e paginação.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de usuários retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "database_error": {
+                    "summary": "Erro ao buscar usuários",
+                    "value": {
+                      "message": "Houve um erro inesperado ao buscar os usuários",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{id}/orders": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Busca usuário específico com seus pedidos",
+        "description": "Retorna dados de um usuário específico incluindo todos os seus pedidos",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do usuário",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário encontrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID inválido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "invalid_id": {
+                    "summary": "ID inválido",
+                    "value": {
+                      "message": "É preciso informar um ID válido!",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "database_error": {
+                    "summary": "Erro ao buscar usuário",
+                    "value": {
+                      "message": "Houve um erro inesperado ao buscar o usuário",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/orders": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Lista todos os pedidos",
+        "description": "Retorna lista paginada de pedidos com filtros opcionais.\nSuporta filtros por data, ID e ordenação customizada.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          },
+          {
+            "name": "initialDate",
+            "in": "query",
+            "description": "Data inicial para filtro (formato YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2024-01-01"
+          },
+          {
+            "name": "finalDate",
+            "in": "query",
+            "description": "Data final para filtro (formato YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2024-12-31"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID específico do pedido para filtro",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de pedidos retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrdersListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "database_error": {
+                    "summary": "Erro ao buscar pedidos",
+                    "value": {
+                      "message": "Houve um erro inesperado ao buscar os pedidos",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Orders"],
+        "summary": "Upload de pedidos em lote",
+        "description": "Processa arquivo contendo múltiplos pedidos para criação em lote.\nAceita arquivos de texto com dados estruturados.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orders_data": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Arquivo contendo os dados dos pedidos"
+                  }
+                }
+              },
+              "examples": {
+                "upload_file": {
+                  "summary": "Exemplo de upload de arquivo",
+                  "description": "Arquivo de texto com dados de pedidos"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pedidos processados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/v1/orders/{id}": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Busca pedido específico",
+        "description": "Retorna dados detalhados de um pedido específico incluindo produtos",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do pedido",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pedido encontrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID inválido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "invalid_id": {
+                    "summary": "ID inválido",
+                    "value": {
+                      "message": "É preciso informar um ID válido!",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "database_error": {
+                    "summary": "Erro ao buscar pedido",
+                    "value": {
+                      "message": "Houve um erro inesperado ao buscar o pedido",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "Page": {
+        "name": "page",
+        "in": "query",
+        "description": "Número da página (padrão 1)",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "example": 1
+      },
+      "PageSize": {
+        "name": "pageSize",
+        "in": "query",
+        "description": "Quantidade de itens por página (padrão 10)",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 10
+        },
+        "example": 10
+      },
+      "OrderBy": {
+        "name": "orderBy",
+        "in": "query",
+        "description": "Campo para ordenação",
+        "schema": {
+          "type": "string",
+          "enum": ["createdAt", "date", "id", "name"],
+          "default": "createdAt"
+        },
+        "example": "createdAt"
+      },
+      "Sort": {
+        "name": "sort",
+        "in": "query",
+        "description": "Direção da ordenação",
+        "schema": {
+          "type": "string",
+          "enum": ["ASC", "DESC"],
+          "default": "ASC"
+        },
+        "example": "ASC"
+      }
+    },
+    "schemas": {
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "UP"
+          }
+        },
+        "required": ["status"]
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "integer",
+            "description": "ID do produto",
+            "example": 456
+          },
+          "value": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Valor do produto",
+            "example": 29.99
+          }
+        },
+        "required": ["product_id", "value"]
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "integer",
+            "description": "ID único do pedido",
+            "example": 123
+          },
+          "total": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Valor total do pedido",
+            "example": 149.97
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Data do pedido",
+            "example": "2024-01-15"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            },
+            "description": "Lista de produtos do pedido"
+          }
+        },
+        "required": ["order_id", "total", "date", "products"]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "description": "ID único do usuário",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário",
+            "example": "João Silva"
+          },
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Order"
+            },
+            "description": "Lista de pedidos do usuário"
+          }
+        },
+        "required": ["user_id", "name", "orders"]
+      },
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Página atual",
+            "example": 1
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Itens por página",
+            "example": 10
+          },
+          "orderBy": {
+            "type": "string",
+            "description": "Campo de ordenação",
+            "example": "createdAt"
+          },
+          "sort": {
+            "type": "string",
+            "enum": ["ASC", "DESC"],
+            "description": "Direção da ordenação",
+            "example": "ASC"
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total de itens disponíveis",
+            "example": 50
+          }
+        },
+        "required": ["page", "pageSize", "orderBy", "sort", "total"]
+      },
+      "UsersListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        },
+        "required": ["data", "pagination"]
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["data"]
+      },
+      "OrdersListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Order"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        },
+        "required": ["data", "pagination"]
+      },
+      "OrderResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Order"
+          }
+        },
+        "required": ["data"]
+      },
+      "UploadResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Pedidos processados com sucesso!"
+          },
+          "data": {
+            "type": "integer",
+            "description": "Número de pedidos processados com sucesso",
+            "example": 200
+          }
+        },
+        "required": ["message", "data"]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Mensagem detalhada do erro"
+          },
+          "status": {
+            "type": "integer",
+            "description": "Código de status HTTP"
+          }
+        },
+        "required": ["error", "message", "status"]
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Requisição inválida",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "invalid_file": {
+                "summary": "Arquivo inválido",
+                "value": {
+                  "message": "Arquivo inválido! Verifique o arquivo e tente novamente!",
+                  "status": 400
+                }
+              },
+              "missing_file": {
+                "summary": "Arquivo não fornecido",
+                "value": {
+                  "message": "Arquivo inválido! Verifique o arquivo e tente novamente!",
+                  "status": 400
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Recurso não encontrado",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "user_not_found": {
+                "summary": "Usuário não encontrado",
+                "value": {
+                  "message": "Usuário não encontrado!",
+                  "status": 404
+                }
+              },
+              "order_not_found": {
+                "summary": "Pedido não encontrado",
+                "value": {
+                  "message": "Pedido não encontrado!",
+                  "status": 404
+                }
+              }
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Ocorreu uma falha inesperada. Tente novamente mais tarde.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "database_error": {
+                "summary": "Erro de banco de dados",
+                "value": {
+                  "message": "Ocorreu uma falha inesperada. Tente novamente mais tarde.",
+                  "status": 500
+                }
+              },
+              "processing_error": {
+                "summary": "Erro de processamento",
+                "value": {
+                  "message": "Erro ao processar arquivo",
+                  "status": 500
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Health",
+      "description": "Endpoints para verificação de saúde da API"
+    },
+    {
+      "name": "Users",
+      "description": "Operações relacionadas a usuários e seus pedidos"
+    },
+    {
+      "name": "Orders",
+      "description": "Operações relacionadas a pedidos"
+    }
+  ]
+}

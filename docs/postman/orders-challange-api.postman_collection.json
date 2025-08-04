@@ -28,12 +28,12 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "2",
+									"value": "1",
 									"disabled": true
 								},
 								{
 									"key": "pageSize",
-									"value": "100",
+									"value": "10",
 									"disabled": true
 								},
 								{
@@ -58,7 +58,7 @@
 								},
 								{
 									"key": "id",
-									"value": "1072",
+									"value": "100",
 									"disabled": true
 								}
 							]
@@ -72,7 +72,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/api/v1/orders/2",
+							"raw": "localhost:3000/api/v1/orders/1",
 							"host": [
 								"localhost"
 							],
@@ -81,7 +81,7 @@
 								"api",
 								"v1",
 								"orders",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -124,11 +124,24 @@
 			"item": [
 				{
 					"name": "Buscar pedidos de usuários",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "orders_data",
+									"type": "file",
+									"src": "/Users/thiago/Downloads/desafio tecnico/data_1.txt"
+								}
+							]
+						},
 						"url": {
-							"raw": "localhost:3000/api/v1/users/orders",
+							"raw": "localhost:3000/api/v1/users/orders?page=1&pageSize=10&sort=asc&orderBy=id",
 							"host": [
 								"localhost"
 							],
@@ -138,6 +151,24 @@
 								"v1",
 								"users",
 								"orders"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "asc"
+								},
+								{
+									"key": "orderBy",
+									"value": "id"
+								}
 							]
 						}
 					},

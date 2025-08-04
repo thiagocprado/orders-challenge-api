@@ -14,6 +14,7 @@ Uma API REST para gerenciamento de pedidos, construída com Node.js, Express e P
 - **Multer**: Upload de arquivos de forma segura
 - **Winston**: Sistema de logs estruturado
 - **Jest**: Framework de testes com mocking
+- **Swagger**: Documentação interativa da API com interface para testes
 
 ### DevOps
 - **Docker**: Containerização para desenvolvimento consistente
@@ -51,7 +52,7 @@ DB_USER=seu_usuario
 make run
 
 # Executar apenas banco de dados
-make docker-build
+make docker-run
 
 # Parar banco de dados
 make docker-down
@@ -92,6 +93,19 @@ npm run test:coverage
 
 ## 🌐 Endpoints da API
 
+### 📖 Documentação Swagger
+A API possui documentação interativa completa disponível em:
+
+**🔗 Acesso Local**: `http://localhost:3000/docs`
+
+**🎯 Seleção de Servidor Base**:
+A documentação Swagger oferece **2 opções de servidor base**:
+- `http://localhost:3000` - Para chamadas diretas na raiz
+- `http://localhost:3000/api` - Para chamadas com prefixo `/api`
+
+**📁 Arquivos de Documentação**:
+- `/docs/swagger/swagger.json` - Especificação em formato JSON  
+
 ### Health Check
 - `GET /health` - Status da aplicação
 
@@ -116,10 +130,10 @@ npm run test:coverage
   - **📂 Arquivos de teste**: Na pasta `/data` há arquivos `.txt` prontos para teste
 
 ### 📄 Collection do Postman
-Na pasta `/docs` você encontra a **collection do Postman** (`orders-challenge-api.collection.json`) com todos os endpoints configurados e exemplos de uso dos parâmetros. 
+Na pasta `/docs/postman` você encontra a **collection do Postman** (`orders-challange-api.postman_collection`) com todos os endpoints configurados e exemplos de uso dos parâmetros. 
 
 > **📥 Download Postman**: [https://www.postman.com/downloads/](https://www.postman.com/downloads/)  
-> **💡 Como usar**: Abra o Postman → Import → Selecione o arquivo `orders-challenge-api.collection.json` 
+> **💡 Como usar**: Abra o Postman → Import → Selecione o arquivo `orders-challange-api.postman_collection` 
 
 ## 🔄 Pipeline CI/CD
 

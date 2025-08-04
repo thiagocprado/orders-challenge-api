@@ -10,6 +10,7 @@ import logger from './src/utils/logger.js';
     server.listen(port, () => {
       logger.info(`server is running on port ${port}`);
       logger.info('see api health in /health');
+      logger.info('see api documentation in /docs');
     });
   } catch (error) {
     logger.error('error starting server', {

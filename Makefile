@@ -11,13 +11,13 @@ run:
 	@docker-compose up -d --build
 	@echo App is running...
 
-docker-build:
+docker-run:
 	@echo Starting database only...
 	@docker-compose up -d db
 
 docker-down:
 	@echo Stopping database...
-	@docker-compose down
+	@docker-compose stop db
 
 clean:
 	@echo Stopping all containers and removing volumes...
