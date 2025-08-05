@@ -9,10 +9,6 @@
     {
       "url": "http://localhost:3000",
       "description": "Development server"
-    },
-    {
-      "url": "http://localhost:3000/api",
-      "description": "API base path"
     }
   ],
   "paths": {
@@ -38,7 +34,7 @@
         }
       }
     },
-    "/v1/users/orders": {
+    "/api/v1/users/orders": {
       "get": {
         "tags": ["Users"],
         "summary": "Lista todos os usuários com seus pedidos",
@@ -90,7 +86,7 @@
         }
       }
     },
-    "/v1/users/{id}/orders": {
+    "/api/v1/users/{id}/orders": {
       "get": {
         "tags": ["Users"],
         "summary": "Busca usuário específico com seus pedidos",
@@ -163,7 +159,7 @@
         }
       }
     },
-    "/v1/orders": {
+    "/api/v1/orders": {
       "get": {
         "tags": ["Orders"],
         "summary": "Lista todos os pedidos",
@@ -291,7 +287,7 @@
         }
       }
     },
-    "/v1/orders/{id}": {
+    "/api/v1/orders/{id}": {
       "get": {
         "tags": ["Orders"],
         "summary": "Busca pedido específico",
