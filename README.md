@@ -98,11 +98,6 @@ A API possui documentação interativa completa disponível em:
 
 **🔗 Acesso Local**: `http://localhost:3000/docs`
 
-**🎯 Seleção de Servidor Base**:
-A documentação Swagger oferece **2 opções de servidor base**:
-- `http://localhost:3000` - Para chamadas diretas na raiz
-- `http://localhost:3000/api` - Para chamadas com prefixo `/api`
-
 **📁 Arquivos de Documentação**:
 - `/docs/swagger/swagger.json` - Especificação em formato JSON  
 
