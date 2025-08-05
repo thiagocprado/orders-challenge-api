@@ -5,10 +5,7 @@ export default {
       useESM: true,
     },
   },
-  moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1',
-  },
-  setupFilesAfterEnv: ['<rootDir>/__tests__/setup.js'],
+  setupFiles: ['<rootDir>/__tests__/setup.js'],
   testMatch: [
     '**/__tests__/**/*.test.js',
     '**/__tests__/**/*.spec.js',
@@ -28,6 +25,8 @@ export default {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
-  testTimeout: 10000,
+  testTimeout: 5000,
   verbose: true,
+  forceExit: true,
+  detectOpenHandles: true,
 };

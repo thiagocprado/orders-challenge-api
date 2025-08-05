@@ -72,16 +72,6 @@ const orderRepository = () => {
     }
   };
 
-  const createOrder = async (body) => {
-    try {
-      const row = await Order.create(body);
-
-      return { data: row };
-    } catch (error) {
-      throw new InternalServerError('Houve um erro inesperado ao criar o pedido', error);
-    }
-  };
-
   const findOrCreateOrder = async (orderData) => {
     try {
       const [order, created] = await Order.findOrCreate({
@@ -98,7 +88,6 @@ const orderRepository = () => {
   return {
     getAllOrders,
     getOrderById,
-    createOrder,
     findOrCreateOrder,
   };
 };

@@ -9,3 +9,4 @@ export const FILE_FIELD_LENGTHS = {
   orderDate: 8,
 };
 export const FILE_ROW_LENGTH = Object.values(FILE_FIELD_LENGTHS).reduce((a, b) => a + b, 0);
+export const FILE_TEMP_PATH_TEST = '__tests__/temp/';
