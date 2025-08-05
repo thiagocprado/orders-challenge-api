@@ -1,27 +1,20 @@
 import { status } from 'http-status';
 import { buildResponse, buildResponseWithPagination } from '../commons/response.js';
 import { serializableOrder, serializableOrders } from '../serializable/order.serializable.js';
+import { getPaginationParams } from '../utils/pagination.js';
 
 const orderController = (orderUseCase) => {
   const getAllOrders = async (req, res, next) => {
     try {
-      const {
-        page = 1,
-        pageSize = 10,
-        orderBy = 'date',
-        sort = 'ASC',
-        initialDate = null,
-        finalDate = null,
-        id = null,
-      } = req.query;
+      const paginationParams = getPaginationParams(req.query);
+      const filters = {
+        initialDate: req.query.initialDate || null,
+        finalDate: req.query.finalDate || null,
+        id: Number(req.query.id) || null,
+      };
       const params = {
-        page,
-        pageSize,
-        orderBy,
-        sort,
-        initialDate,
-        finalDate,
-        id,
+        ...paginationParams,
+        ...filters,
       };
 
       const { count, data } = await orderUseCase.getAllOrders(params);

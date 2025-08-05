@@ -26,7 +26,9 @@
                   "$ref": "#/components/schemas/HealthResponse"
                 },
                 "example": {
-                  "status": "UP"
+                  "status": "UP",
+                  "database": "UP",
+                  "timestamp": "05/08/2025, 01:57:29"
                 }
               }
             }
@@ -416,6 +418,14 @@
           "status": {
             "type": "string",
             "example": "UP"
+          },
+          "database": {
+            "type": "string",
+            "example": "UP"
+          },
+          "timestamp": {
+            "type": "string",
+            "example": "05/08/2025, 01:57:29"
           }
         },
         "required": ["status"]

@@ -14,6 +14,7 @@ import {
   writeMockFile,
 } from '../data/order.data.mock.js';
 import { rm } from 'fs/promises';
+import { FILE_TEMP_PATH } from '../../src/enums/index.js';
 
 jest.unstable_mockModule('src/configs/database.js', () => mockDatabase);
 jest.unstable_mockModule('src/repositories/order.repository.js', () => ({
@@ -40,6 +41,7 @@ describe('Orders Routes', () => {
 
   afterAll(async () => {
     await rm(FILE_TEMP_PATH_TEST, { recursive: true, force: true });
+    await rm(FILE_TEMP_PATH, { recursive: true, force: true });
   });
 
   describe('GET /orders', () => {
@@ -78,8 +80,8 @@ describe('Orders Routes', () => {
       expect(response.status).toBe(status.OK);
       expect(response.body.data).toHaveLength(2);
       expect(response.body.pagination.total).toBe(2);
-      expect(response.body.pagination.page).toBe('2');
-      expect(response.body.pagination.pageSize).toBe('5');
+      expect(response.body.pagination.page).toBe(2);
+      expect(response.body.pagination.pageSize).toBe(5);
       expect(response.body.pagination.orderBy).toBe('date');
       expect(response.body.pagination.sort).toBe('DESC');
     });

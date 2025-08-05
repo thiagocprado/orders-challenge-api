@@ -25,6 +25,21 @@ const OrderProduct = sequelize.define(
   {
     tableName: 'tb_orders_products',
     timestamps: true,
+    indexes: [
+      {
+        name: 'idx_order_id',
+        fields: ['orderId'],
+      },
+      {
+        name: 'idx_product_id',
+        fields: ['productId'],
+      },
+      {
+        unique: true,
+        name: 'uniq_order_product',
+        fields: ['orderId', 'productId'],
+      },
+    ],
   }
 );
 

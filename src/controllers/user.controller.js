@@ -1,18 +1,12 @@
 import { status } from 'http-status';
 import { buildResponse, buildResponseWithPagination } from '../commons/response.js';
 import { serializableUser, serializableUsers } from '../serializable/user.serializable.js';
+import { getPaginationParams } from '../utils/pagination.js';
 
 const userController = (userUseCase) => {
   const getAllUsersOrders = async (req, res, next) => {
     try {
-      const { page = 1, pageSize = 10, orderBy = 'createdAt', sort = 'ASC' } = req.query;
-      const params = {
-        page,
-        pageSize,
-        orderBy,
-        sort,
-      };
-
+      const params = getPaginationParams(req.query);
       const { count, data } = await userUseCase.getAllUsersOrders(params);
 
       const resp = buildResponseWithPagination(serializableUsers(data), {

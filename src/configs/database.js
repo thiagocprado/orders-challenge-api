@@ -29,4 +29,14 @@ const closeDB = async () => {
   }
 };
 
-export { connectDB, closeDB, sequelize };
+const ping = async () => {
+  try {
+    await sequelize.authenticate();
+    logger.info('database connection is alive.');
+  } catch (error) {
+    logger.error(`error pinging the database: ${error}`);
+    throw error;
+  }
+};
+
+export { connectDB, closeDB, ping, sequelize };

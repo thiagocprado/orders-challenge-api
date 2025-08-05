@@ -21,6 +21,12 @@ const Order = sequelize.define(
   {
     tableName: 'tb_orders',
     timestamps: true,
+    indexes: [
+      {
+        name: 'idx_user_id',
+        fields: ['userId'],
+      },
+    ],
   }
 );
 

@@ -10,3 +10,10 @@ export const FILE_FIELD_LENGTHS = {
 };
 export const FILE_ROW_LENGTH = Object.values(FILE_FIELD_LENGTHS).reduce((a, b) => a + b, 0);
 export const FILE_TEMP_PATH_TEST = '__tests__/temp/';
+
+export const PAGINATION_DEFAULTS = {
+  page: 1,
+  pageSize: 10,
+  orderBy: 'id',
+  sort: 'ASC',
+};

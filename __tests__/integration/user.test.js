@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import supertest from 'supertest';
 import status from 'http-status';
 
@@ -73,8 +72,8 @@ describe('Users Routes', () => {
       expect(response.status).toBe(status.OK);
       expect(response.body.data).toHaveLength(2);
       expect(response.body.pagination.total).toBe(2);
-      expect(response.body.pagination.page).toBe('2');
-      expect(response.body.pagination.pageSize).toBe('5');
+      expect(response.body.pagination.page).toBe(2);
+      expect(response.body.pagination.pageSize).toBe(5);
       expect(response.body.pagination.orderBy).toBe('createdAt');
       expect(response.body.pagination.sort).toBe('DESC');
     });

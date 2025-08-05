@@ -11,6 +11,7 @@ const mockSequelize = {
 const mockDatabase = {
   connectDB: jest.fn().mockResolvedValue(),
   closeDB: jest.fn().mockResolvedValue(),
+  ping: jest.fn().mockImplementation(),
   sequelize: mockSequelize,
 };
 
