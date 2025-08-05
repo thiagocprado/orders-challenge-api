@@ -44,6 +44,7 @@ DB_NAME=orders_db
 DB_PASSWORD=sua_senha
 DB_PORT=5432
 DB_USER=seu_usuario
+NODE_ENV=dev
 ```
 
 ### Com Make (Recomendado)

@@ -3,7 +3,8 @@ dotenv.config();
 
 const environment = {
   app: {
-    port: Number(process.env.APP_PORT),
+    env: process.env.NODE_ENV || 'dev',
+    port: process.env.APP_PORT ? Number(process.env.APP_PORT) : 3000,
   },
   db: {
     dialect: process.env.DB_DIALECT,
@@ -11,7 +12,7 @@ const environment = {
     logging: process.env.DB_LOGGING,
     name: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
-    port: Number(process.env.DB_PORT),
+    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432,
     user: process.env.DB_USER,
   },
 };
