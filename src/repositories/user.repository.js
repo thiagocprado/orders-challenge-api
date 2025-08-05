@@ -4,7 +4,7 @@ import OrderProduct from '../models/order.product.model.js';
 import { InternalServerError } from '../commons/error.js';
 
 const userRepository = () => {
-  const getAllUsers = async (params) => {
+  const getAllUsersOrders = async (params) => {
     const offset = (Number(params.page) - 1) * Number(params.pageSize);
     const limit = Number(params.pageSize);
     const orderBy = params.orderBy;
@@ -36,7 +36,7 @@ const userRepository = () => {
     }
   };
 
-  const getUserById = async (id) => {
+  const getUserOrdersById = async (id) => {
     try {
       const row = await User.findByPk(id, {
         include: [
@@ -75,8 +75,8 @@ const userRepository = () => {
   };
 
   return {
-    getAllUsers,
-    getUserById,
+    getAllUsersOrders,
+    getUserOrdersById,
     findOrCreateUser,
   };
 };

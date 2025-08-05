@@ -1,17 +1,17 @@
 import { BadRequest, NotFound } from '../commons/error.js';
 
 const userUseCase = (userRepository) => {
-  const getAllUsers = async (params) => {
-    const { count, data } = await userRepository.getAllUsers(params);
+  const getAllUsersOrders = async (params) => {
+    const { count, data } = await userRepository.getAllUsersOrders(params);
     return { count, data };
   };
 
-  const getUserById = async (id) => {
+  const getUserOrdersById = async (id) => {
     if (!id || isNaN(Number(id))) {
       throw new BadRequest('É preciso informar um ID válido!');
     }
 
-    const { found, data } = await userRepository.getUserById(id);
+    const { found, data } = await userRepository.getUserOrdersById(id);
     if (!found) {
       throw new NotFound('Usuário não encontrado!');
     }
@@ -20,8 +20,8 @@ const userUseCase = (userRepository) => {
   };
 
   return {
-    getAllUsers,
-    getUserById,
+    getAllUsersOrders,
+    getUserOrdersById,
   };
 };
 

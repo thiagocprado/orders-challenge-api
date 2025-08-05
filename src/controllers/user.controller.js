@@ -3,7 +3,7 @@ import { buildResponse, buildResponseWithPagination } from '../commons/response.
 import { serializableUser, serializableUsers } from '../serializable/user.serializable.js';
 
 const userController = (userUseCase) => {
-  const getAllUsers = async (req, res, next) => {
+  const getAllUsersOrders = async (req, res, next) => {
     try {
       const { page = 1, pageSize = 10, orderBy = 'createdAt', sort = 'ASC' } = req.query;
       const params = {
@@ -13,7 +13,7 @@ const userController = (userUseCase) => {
         sort,
       };
 
-      const { count, data } = await userUseCase.getAllUsers(params);
+      const { count, data } = await userUseCase.getAllUsersOrders(params);
 
       const resp = buildResponseWithPagination(serializableUsers(data), {
         ...params,
@@ -26,10 +26,10 @@ const userController = (userUseCase) => {
     }
   };
 
-  const getUserById = async (req, res, next) => {
+  const getUserOrdersById = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const data = await userUseCase.getUserById(id);
+      const data = await userUseCase.getUserOrdersById(id);
       const resp = buildResponse(serializableUser(data));
 
       res.status(status.OK).json(resp);
@@ -39,8 +39,8 @@ const userController = (userUseCase) => {
   };
 
   return {
-    getAllUsers,
-    getUserById,
+    getAllUsersOrders,
+    getUserOrdersById,
   };
 };
 
