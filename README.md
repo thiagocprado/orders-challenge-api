@@ -44,6 +44,7 @@ DB_NAME=orders_db
 DB_PASSWORD=sua_senha
 DB_PORT=5432
 DB_USER=seu_usuario
+LOG_LEVEL=debug
 NODE_ENV=dev
 ```
 
@@ -91,6 +92,13 @@ npm test
 # Rodar testes com coverage
 npm run test:coverage
 ```
+
+### 📊 Configuração de Logs
+A aplicação suporta diferentes níveis de log através da variável `LOG_LEVEL`:
+
+- **`LOG_LEVEL=debug`**: Mostra todos os logs (debug, info, warn, error) - Ideal para desenvolvimento
+- **`LOG_LEVEL=error`**: Mostra apenas logs de erro - Ideal para produção  
+- **`LOG_LEVEL=test`**: Silencia todos os logs - Usado automaticamente nos testes
 
 ## 🌐 Endpoints da API
 

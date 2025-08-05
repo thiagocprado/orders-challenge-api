@@ -4,6 +4,7 @@ dotenv.config();
 const environment = {
   app: {
     env: process.env.NODE_ENV || 'dev',
+    logLevel: process.env.LOG_LEVEL || 'debug',
     port: process.env.APP_PORT ? Number(process.env.APP_PORT) : 3000,
   },
   db: {

@@ -9,8 +9,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "start": "node index.js",
-    "test": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test:coverage": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
+    "test": "cross-env NODE_ENV=test LOG_LEVEL=test node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:debug": "cross-env NODE_ENV=test LOG_LEVEL=debug node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:coverage": "cross-env NODE_ENV=test LOG_LEVEL=test node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "author": "",
   "license": "ISC",
