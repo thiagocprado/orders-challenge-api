@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import status from 'http-status';
 import path from 'path';
-import { FILE_TEMP_PATH_TEST } from '../../src/enums/index.js';
+import { FILE_TEMP_PATH_TEST } from '@/enums/index.js';
 
 import mockDatabase from '../mocks/database.mock.js';
 import mockOrderRepository from '../mocks/order.repository.mock.js';
@@ -15,14 +15,14 @@ import {
 } from '../data/order.data.mock.js';
 import { rm } from 'fs/promises';
 
-jest.unstable_mockModule('../src/configs/database.js', () => mockDatabase);
-jest.unstable_mockModule('../src/repositories/order.repository.js', () => ({
+jest.unstable_mockModule('src/configs/database.js', () => mockDatabase);
+jest.unstable_mockModule('src/repositories/order.repository.js', () => ({
   default: () => mockOrderRepository,
 }));
-jest.unstable_mockModule('../src/repositories/order.product.repository.js', () => ({
+jest.unstable_mockModule('src/repositories/order.product.repository.js', () => ({
   default: () => mockOrderProductRepository,
 }));
-jest.unstable_mockModule('../src/repositories/user.repository.js', () => ({
+jest.unstable_mockModule('src/repositories/user.repository.js', () => ({
   default: () => mockUserRepository,
 }));
 

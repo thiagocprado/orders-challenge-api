@@ -13,6 +13,10 @@ export default {
     '**/*.spec.js',
   ],
   transform: {},
+  moduleNameMapper: {
+    '^src/(.*)$': '<rootDir>/src/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
   collectCoverageFrom: [
     'src/**/*.js',
     '!src/configs/**',
