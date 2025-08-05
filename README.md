@@ -111,6 +111,11 @@ A documentação Swagger oferece **2 opções de servidor base**:
 
 ### Usuários
 - `GET /v1/users/orders` - Lista todos os usuários com pedidos
+  - **Parâmetros de paginação**:
+      - `page` - Número da página (ex: `page=2`)
+      - `pageSize` - Itens por página (ex: `pageSize=100`)
+      - `orderBy` - Campo para ordenação (ex: `orderBy=id`)
+      - `sort` - Direção da ordenação: `asc` ou `desc`
 - `GET /v1/users/:id/orders` - Busca usuário específico com pedidos
 
 ### Pedidos
